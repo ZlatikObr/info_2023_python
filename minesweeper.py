@@ -21,13 +21,13 @@ class MyButton(tk.Button): #нужно переопределить поведе
         super(MyButton, self).__init__(master, width=3, font='Calibri 15 bold', *args, **kwargs) #вспомили про основную  ткинтеровскую кнопку, передача аргументов в конструктор родительского класса 
         self.x = x
         self.y = y
-        self.number = number       # Свойства экземпляра класса
+        self.number = number       # Свойства экземпляра класса, а также номер
         self.is_mine = False       # мина это или нет? изначально мин нет
         self.count_bomb = 0
         self.is_open = False
 
     def __repr__(self):       #определяет вывод внутри консоли
-        return f'MyButton {self.x}{self.y}{self.number}{self.is_mine}'  #проверяем вывод кнопок с их координатами 
+        return f'MyButton {self.x}{self.y}{self.number}{self.is_mine}'  #проверяем вывод кнопок с их координатами и номерами
 
 
 class MineSweeper:   #основной класс нашей игры (тут вся логика) с атрибутами/данными и поведение/методы при нажатии кнопок или запуска игры
@@ -211,12 +211,12 @@ class MineSweeper:   #основной класс нашей игры (тут в
                     print(btn.count_bomb, end='')
             print()
 
-    def insert_mines(self, number:int):
-        index_mines = self.get_mines_places(number)
+    def insert_mines(self, number:int):                 #тут располаем бомбы
+        index_mines = self.get_mines_places(number)      # список индексов мин
         print(index_mines)
         count = 1
-        for i in range(1, MineSweeper.ROW + 1):
-            for j in range(1, MineSweeper.COLUMNS + 1):
+        for i in range(1, MineSweeper.ROW + 1):             #проходим по рядам и по кнопкам в ним
+            for j in range(1, MineSweeper.COLUMNS + 1):      #спрашиваем - если индекс кнопки в списке index_mines,если - да,  изменяем значение is_mine на True
                 btn = self.buttons[i][j]
                 if btn.number in index_mines:
                     btn.is_mine = True
@@ -234,13 +234,13 @@ class MineSweeper:   #основной класс нашей игры (тут в
                                 count_bomb += 1
                 btn.count_bomb = count_bomb
 
-    @staticmethod
+    @staticmethod                                  #тут мы не работаем с экземплярами, те сами мины не расставляет, self не нужен, метод может стать статичным
     def get_mines_places(exclude_number:int):
-        indexes = list(range(1, MineSweeper.COLUMNS * MineSweeper.ROW + 1))
+        indexes = list(range(1, MineSweeper.COLUMNS * MineSweeper.ROW + 1)) #формруем числа от 1 д общего количества кнопок
         print(f'Исключаем кнопку номер {exclude_number}')
         indexes.remove(exclude_number)
-        shuffle(indexes)
-        return indexes[:MineSweeper.MINES]
+        shuffle(indexes)                      #перемешиваем наши ндексы
+        return indexes[:MineSweeper.MINES]     #возврвщвем некоторое количество мин
 
 
 game = MineSweeper()   #переменная game сохраняет MineSweeper() и тут создадутся кнопки
