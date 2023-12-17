@@ -1,5 +1,5 @@
-import tkinter as tk    #импортируем ткинтер под псевдонимом тк
-from random import shuffle
+import tkinter as tk          #импортируем ткинтер под псевдонимом тк
+from random import shuffle     #импортируем функцию shuffle - рандомайзер для чисел-номеров кнопок, где будут расположены мины
 from tkinter.messagebox import showinfo, showerror
 
 colors = {
@@ -26,20 +26,20 @@ class MyButton(tk.Button):
         self.count_bomb = 0
         self.is_open = False
 
-    def __repr__(self):
+    def __repr__(self):  
         return f'MyButton {self.x}{self.y}{self.number}{self.is_mine}'
 
 
-class MineSweeper:
-    window = tk.Tk()
+class MineSweeper:   #основной класс нашей игры с атрибутами/данными и поведение/методы при нажатии кнопок или запуска игры
+    window = tk.Tk()     
     ROW = 7
-    COLUMNS = 10
+    COLUMNS = 10          #описываем атрибуты - переменные игры
     MINES = 20
     IS_GAME_OVER = False
     IS_FIRST_CLICK = True
 
-    def __init__(self):
-        self.buttons = []
+    def __init__(self):    #вызываем волшебный метод __init__ для инициализации игры, т.е. создание данных для дальнейшей обработки, напрмер, кнопки
+        self.buttons = []   #кнопки хранятся внутри класса как экземпляры, к которым мы обращаемся через  self.
         for i in range(MineSweeper.ROW +2):
             temp = []
             for j in range(MineSweeper.COLUMNS + 2):
@@ -157,7 +157,7 @@ class MineSweeper:
         MineSweeper.MINES = int(mines.get())
         self.reload()
 
-    def create_widgets(self):
+    def create_widgets(self):        #выводим окно 
 
         menubar = tk.Menu(self.window)
         self.window.config(menu=menubar)
@@ -169,7 +169,7 @@ class MineSweeper:
         menubar.add_cascade(label='Файл', menu=setting_menu)
 
         count = 1
-        for i in range(1, MineSweeper.ROW + 1):
+        for i in range(1, MineSweeper.ROW + 1):      
             for j in range(1, MineSweeper.COLUMNS + 1):
                 btn = self.buttons[i][j]
                 btn.number = count
@@ -197,11 +197,11 @@ class MineSweeper:
                     btn.config(text=btn.count_bomb, fg=color)
 
     def start(self):
-        self.create_widgets()
+        self.create_widgets()     #инкапсулируем нужные нам методы
         #self.open_all_buttons()
-        MineSweeper.window.mainloop()
+        MineSweeper.window.mainloop() #напосредственно отображение игровго окна
 
-    def print_buttons(self):
+    def print_buttons(self):                             
         for i in range(1, MineSweeper.ROW + 1):
             for j in range(1, MineSweeper.COLUMNS + 1):
                 btn = self.buttons[i][j]
@@ -243,5 +243,5 @@ class MineSweeper:
         return indexes[:MineSweeper.MINES]
 
 
-game = MineSweeper()
-game.start()
+game = MineSweeper()   #переменная game сохраняет MineSweeper() и тут создадутся кнопки
+game.start()           #запускам игру!!! строчки ниже не выполняются
