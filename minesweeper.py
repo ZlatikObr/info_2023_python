@@ -73,7 +73,7 @@ class MineSweeper:   #основной класс нашей игры (тут в
             self.print_buttons()
             MineSweeper.IS_FIRST_CLICK = False
 
-        if clicked_button.is_mine:
+        if clicked_button.is_mine:              
             clicked_button.config(text='💣', background='red', disabledforeground='black')
             clicked_button.is_open = True
             MineSweeper.IS_GAME_OVER = True
@@ -89,8 +89,8 @@ class MineSweeper:   #основной класс нашей игры (тут в
                 clicked_button.config(text=clicked_button.count_bomb, disabledforeground=color)
                 clicked_button.is_open = True
             else:
-                self.breadth_first_search(clicked_button)
-        clicked_button.config(state='disabled')
+                self.breadth_first_search(clicked_button) #далее создаем алгоритм обхода в ширину для открытия кнопок в игровом поле
+        clicked_button.config(state='disabled')            #причем при отсутсвии бомбы в кнопке
         clicked_button.config(relief=tk.SUNKEN)
 
     def breadth_first_search(self, btn: MyButton):
@@ -108,15 +108,15 @@ class MineSweeper:   #основной класс нашей игры (тут в
             cur_btn.config(relief=tk.SUNKEN)
 
             if cur_btn.count_bomb == 0:
-                 x, y = cur_btn.x, cur_btn.y
+                 x, y = cur_btn.x, cur_btn.y       #обход определенных соседей: 1 координата изменяется на 1
                  for dx in [-1, 0, 1]:
                     for dy in [-1, 0, 1]:
                         if not abs(dx - dy) == 1:
                             continue
 
                         next_btn = self.buttons[x+dx][y+dy]
-                        if not next_btn.is_open and 1<=next_btn.x<=MineSweeper.ROW and \
-                                1 <= next_btn.y <= MineSweeper.COLUMNS and next_btn not in queue:
+                        if not next_btn.is_open and 1<=next_btn.x<=MineSweeper.ROW and \   #кнопка не была открыта и е является барьерной
+                                1 <= next_btn.y <= MineSweeper.COLUMNS and next_btn not in queue:  #не добавляем кнопку, которая уже была в очереди 
                             queue.append(next_btn)
 
     def reload(self):
