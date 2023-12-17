@@ -17,11 +17,11 @@ colors = {
 
 class MyButton(tk.Button):
 
-    def __init__(self, master, x, y, number=0, *args, **kwargs):
-        super(MyButton, self).__init__(master, width=3, font='Calibri 15 bold', *args, **kwargs)
+    def __init__(self, master, x, y, number=0, *args, **kwargs): #Master - родительский виджет(окно tkinter), *args и **kwargs переменное количество позиционных и именованных аргументов соответственно. Они позволяют передавать дополнительные аргументы при создании экземпляра класса MyButton и передавать их дальше в конструктор родительского класса.
+        super(MyButton, self).__init__(master, width=3, font='Calibri 15 bold', *args, **kwargs) #передача аргументов в конструктор родительского класса 
         self.x = x
         self.y = y
-        self.number = number
+        self.number = number       # Свойства экземпляра класса
         self.is_mine = False
         self.count_bomb = 0
         self.is_open = False
