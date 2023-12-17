@@ -1,4 +1,4 @@
-import tkinter as tk
+import tkinter as tk    #импортируем ткинтер под псевдонимом тк
 from random import shuffle
 from tkinter.messagebox import showinfo, showerror
 
