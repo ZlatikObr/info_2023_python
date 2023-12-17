@@ -44,7 +44,7 @@ class MineSweeper:   #основной класс нашей игры (тут в
             temp = []
             for j in range(MineSweeper.COLUMNS + 2):
                 btn = MyButton(MineSweeper.window, x=i, y=j)
-                btn.config(command=lambda button=btn: self.click(button))
+                btn.config(command=lambda button=btn: self.click(button)) #чтобы корректно работало нажатие, с помощью метода config передаем кнопку, а через анонимную функию-посредник приминмаем кнопку и вызываем click
                 btn.bind("<Button-2>", self.right_click) #Связка действия (вызов функции self.right_click) с событием (щелчок правой кнопкой мыши). 
                 #"<Button-2>" - это спецификация события, которое представляет собой щелчок правой кнопкой мыши. "self.right_click" - это ссылка на метод или функцию, которая будет вызвана при возникновении этого события
                 temp.append(btn)
@@ -62,8 +62,8 @@ class MineSweeper:   #основной класс нашей игры (тут в
             cur_btn['state'] = 'normal'
 
 
-    def click(self, clicked_button: MyButton):
-
+    def click(self, clicked_button: MyButton):  #обрабатываем нажатье кнопки: выод мины или цифры, причем располагаем метод в MineSweeper, так как отжатая кнопка должна знаь и о своих соседях
+                                                 #аннотация с чем работаем - MyButton
         if MineSweeper.IS_GAME_OVER:
             return
 
@@ -83,7 +83,7 @@ class MineSweeper:   #основной класс нашей игры (тут в
                     btn = self.buttons[i][j]
                     if btn.is_mine:
                         btn['text'] = '💣'
-        else:
+        else:                                                            #запрет на нажатие кнопки, отжатой ранее
             color = colors.get(clicked_button.count_bomb, 'black')
             if clicked_button.count_bomb:
                 clicked_button.config(text=clicked_button.count_bomb, disabledforeground=color)
