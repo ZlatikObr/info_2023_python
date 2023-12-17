@@ -45,7 +45,8 @@ class MineSweeper:
             for j in range(MineSweeper.COLUMNS + 2):
                 btn = MyButton(MineSweeper.window, x=i, y=j)
                 btn.config(command=lambda button=btn: self.click(button))
-                btn.bind("<Button-2>", self.right_click)
+                btn.bind("<Button-2>", self.right_click) #Связка действия (вызов функции self.right_click) с событием (щелчок правой кнопкой мыши). 
+                #"<Button-2>" - это спецификация события, которое представляет собой щелчок правой кнопкой мыши. "self.right_click" - это ссылка на метод или функцию, которая будет вызвана при возникновении этого события
                 temp.append(btn)
             self.buttons.append(temp)
 
