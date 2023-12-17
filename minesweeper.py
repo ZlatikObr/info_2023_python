@@ -41,7 +41,7 @@ class MineSweeper:   #основной класс нашей игры (тут в
     def __init__(self):    #вызываем волшебный метод __init__ для инициализации игры, т.е. создание данных для дальнейшей обработки, напрмер, кнопки
         self.buttons = []   #кнопки хранятся внутри класса как экземпляры, к которым мы обращаемся через  self.
         for i in range(MineSweeper.ROW +2):
-            temp = []
+            temp = []                                 #посредством +2 корректируем нажатие кнопок по бокам  
             for j in range(MineSweeper.COLUMNS + 2):
                 btn = MyButton(MineSweeper.window, x=i, y=j)
                 btn.config(command=lambda button=btn: self.click(button)) #чтобы корректно работало нажатие, с помощью метода config передаем кнопку, а через анонимную функию-посредник приминмаем кнопку и вызываем click
@@ -170,19 +170,19 @@ class MineSweeper:   #основной класс нашей игры (тут в
 
         count = 1
         for i in range(1, MineSweeper.ROW + 1):      
-            for j in range(1, MineSweeper.COLUMNS + 1):
+            for j in range(1, MineSweeper.COLUMNS + 1):    #учли барьерные кнопки, начиная с 1
                 btn = self.buttons[i][j]
                 btn.number = count
                 btn.grid(row=i, column=j, stick='NWES')
                 count += 1
 
         for i in range(1, MineSweeper.ROW + 1):
-            tk.Grid.rowconfigure(self.window, i, weight=1)
+            tk.Grid.rowconfigure(self.window, i, weight=1)     #учли барьерны
 
         for i in range(1, MineSweeper.COLUMNS + 1):
             tk.Grid.columnconfigure(self.window, i, weight=1)
 
-    def open_all_buttons(self):
+    def open_all_buttons(self):                          #здесь мы создаем нейтральные барьерные элементы                      
         for i in range(MineSweeper.ROW + 2):
             for j in range(MineSweeper.COLUMNS + 2):
                 btn =  self.buttons[i][j]
@@ -208,12 +208,12 @@ class MineSweeper:   #основной класс нашей игры (тут в
                 if btn.is_mine:
                     print('B', end='')
                 else:
-                    print(btn.count_bomb, end='')
+                    print(btn.count_bomb, end='')      #тут отображаем красиво учитанные бомбы из count_mines_in_buttons
             print()
 
     def insert_mines(self, number:int):                 #тут располаем бомбы
         index_mines = self.get_mines_places(number)      # список индексов мин
-        print(index_mines)
+        print(index_mines)                                #счетчик пристваемвается всем кнопкам, кроме барьерных
         count = 1
         for i in range(1, MineSweeper.ROW + 1):             #проходим по рядам и по кнопкам в ним
             for j in range(1, MineSweeper.COLUMNS + 1):      #спрашиваем - если индекс кнопки в списке index_mines,если - да,  изменяем значение is_mine на True
@@ -221,18 +221,18 @@ class MineSweeper:   #основной класс нашей игры (тут в
                 if btn.number in index_mines:
                     btn.is_mine = True
 
-    def count_mines_in_buttons(self):
+    def count_mines_in_buttons(self):                     #здесь учитываем соседей наших бомб 
         for i in range(1, MineSweeper.ROW + 1):
-            for j in range(1, MineSweeper.COLUMNS + 1):
-                btn = self.buttons[i][j]
-                count_bomb = 0
-                if not btn.is_mine:
+            for j in range(1, MineSweeper.COLUMNS + 1):  #проходим по всем игровым кнопкам 
+                btn = self.buttons[i][j]                 #позиционируемся на конкретной бомбе
+                count_bomb = 0                           
+                if not btn.is_mine:                       #обращаемся к соседям конкретной кнопки с конкретным координатным отступом
                     for row_dx in [-1, 0, 1]:
                         for col_dx in [-1, 0, 1]:
                             neighbour = self.buttons[i + row_dx][j + col_dx]
                             if neighbour.is_mine:
-                                count_bomb += 1
-                btn.count_bomb = count_bomb
+                                count_bomb += 1          #с помощью всевозможных сочетаний получаем всех соседей кнопки-не-бомбы и если этот сосед - мина, увеличиваем счетчик
+                btn.count_bomb = count_bomb              #создаем новый антрибут, в который просавляем числе с счетчика
 
     @staticmethod                                  #тут мы не работаем с экземплярами, те сами мины не расставляет, self не нужен, метод может стать статичным
     def get_mines_places(exclude_number:int):
