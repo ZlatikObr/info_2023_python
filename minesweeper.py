@@ -1,6 +1,6 @@
 import tkinter as tk          #импортируем ткинтер под псевдонимом тк
 from random import shuffle     #импортируем функцию shuffle - рандомайзер для чисел-номеров кнопок, где будут расположены мины
-from tkinter.messagebox import showinfo, showerror
+from tkinter.messagebox import showinfo, showerror    #тут хранятся сообщения для пользователя (диалоговое окно)
 
 colors = {                      #создаем словарь для окрашивания кнопок из пар ключ (количество бомб) и значение (цвет кнопки)
     0: 'white',
@@ -35,7 +35,7 @@ class MineSweeper:   #основной класс нашей игры (тут в
     ROW = 7
     COLUMNS = 10          #описываем атрибуты - переменные игры
     MINES = 20
-    IS_GAME_OVER = False
+    IS_GAME_OVER = False    #на первом клике мы не попадаем в бомбу 
     IS_FIRST_CLICK = True
 
     def __init__(self):    #вызываем волшебный метод __init__ для инициализации игры, т.е. создание данных для дальнейшей обработки, напрмер, кнопки
@@ -168,11 +168,11 @@ class MineSweeper:   #основной класс нашей игры (тут в
         setting_menu.add_command(label='Выход', command=self.window.destroy)
         menubar.add_cascade(label='Файл', menu=setting_menu)
 
-        count = 1
+        count = 1                                  
         for i in range(1, MineSweeper.ROW + 1):      
             for j in range(1, MineSweeper.COLUMNS + 1):    #учли барьерные кнопки, начиная с 1
                 btn = self.buttons[i][j]
-                btn.number = count
+                btn.number = count                         
                 btn.grid(row=i, column=j, stick='NWES')
                 count += 1
 
