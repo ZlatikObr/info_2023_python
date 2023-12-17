@@ -2,9 +2,9 @@ import tkinter as tk          #импортируем ткинтер под пс
 from random import shuffle     #импортируем функцию shuffle - рандомайзер для чисел-номеров кнопок, где будут расположены мины
 from tkinter.messagebox import showinfo, showerror
 
-colors = {
+colors = {                      #создаем словарь для окрашивания кнопок из пар ключ (количество бомб) и значение (цвет кнопки)
     0: 'white',
-    1: 'blue',
+    1: 'blue',           
     2: '#008200',
     3: '#FF0000',
     4: '#000084',
@@ -177,7 +177,7 @@ class MineSweeper:   #основной класс нашей игры (тут в
                 count += 1
 
         for i in range(1, MineSweeper.ROW + 1):
-            tk.Grid.rowconfigure(self.window, i, weight=1)     #учли барьерны
+            tk.Grid.rowconfigure(self.window, i, weight=1)    
 
         for i in range(1, MineSweeper.COLUMNS + 1):
             tk.Grid.columnconfigure(self.window, i, weight=1)
@@ -187,13 +187,13 @@ class MineSweeper:   #основной класс нашей игры (тут в
             for j in range(MineSweeper.COLUMNS + 2):
                 btn =  self.buttons[i][j]
                 if btn.is_mine:
-                    btn.config(text='*', background='red', disabledforeground='black')
+                    btn.config(text='*', background='red', disabledforeground='black') #раскрашиваем кнопки
                 # elif btn.count_bomb == 1:
                 #    btn.config(text=btn.count_bomb, fg='blue')
                 # elif btn.count_bomb == 2:
                 #    btn.config(text=btn.count_bomb, fg='green')
-                elif btn.count_bomb in colors:
-                    color = colors.get(btn.count_bomb, 'black')
+                elif btn.count_bomb in colors:                        #проверка на наличие нужного ключа
+                    color = colors.get(btn.count_bomb, 'black')      #кнопка - не бомба, получаем ее цвет через значение ключа, если ключа нет, по умолчанию возвращаем черный цвет
                     btn.config(text=btn.count_bomb, fg=color)
 
     def start(self):
@@ -202,14 +202,14 @@ class MineSweeper:   #основной класс нашей игры (тут в
         MineSweeper.window.mainloop() #напосредственно отображение игровго окна
 
     def print_buttons(self):                             
-        for i in range(1, MineSweeper.ROW + 1):
+        for i in range(1, MineSweeper.ROW + 1):           #редактируем вывод в консоль: бомба - "В" или сколько мин вокруг кнопки
             for j in range(1, MineSweeper.COLUMNS + 1):
                 btn = self.buttons[i][j]
                 if btn.is_mine:
-                    print('B', end='')
+                    print('B', end='')               
                 else:
                     print(btn.count_bomb, end='')      #тут отображаем красиво учитанные бомбы из count_mines_in_buttons
-            print()
+            print()                                    #перенос для вывода в кослост н-мерного списка
 
     def insert_mines(self, number:int):                 #тут располаем бомбы
         index_mines = self.get_mines_places(number)      # список индексов мин
