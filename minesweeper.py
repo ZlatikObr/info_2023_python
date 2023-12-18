@@ -93,7 +93,8 @@ class MineSweeper:   #основной класс нашей игры (тут в
         clicked_button.config(state='disabled')            #причем при отсутсвии бомбы в кнопке
         clicked_button.config(relief=tk.SUNKEN)
 
-    def breadth_first_search(self, btn: MyButton):
+    def breadth_first_search(self, btn: MyButton): #Если количество бомб вокруг текущей кнопки равно нулю, то происходит обход соседних кнопок. Для каждой соседней кнопки проверяется, что она еще не открыта и находится в пределах игрового поля. Если это условие выполняется, то соседняя кнопка добавляется в очередь queue для дальнейшего обхода.
+
         queue = [btn]
         while queue:
 
