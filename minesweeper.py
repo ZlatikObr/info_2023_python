@@ -119,10 +119,10 @@ class MineSweeper:   #основной класс нашей игры (тут в
                                 1 <= next_btn.y <= MineSweeper.COLUMNS and next_btn not in queue:  #не добавляем кнопку, которая уже была в очереди 
                             queue.append(next_btn)
 
-    def reload(self):
+    def reload(self):  #перезапуск игры методом destroy() через обход элементов indow.winfo_children
         [child.destroy() for child in self.window.winfo_children()]
         self.__init__()
-        self.create_widgets()
+        self.create_widgets()  #заново создаем виджеты
         MineSweeper.IS_FIRST_CLICK = True
         MineSweeper.IS_GAME_OVER = False
 
@@ -159,12 +159,12 @@ class MineSweeper:   #основной класс нашей игры (тут в
 
     def create_widgets(self):        #выводим окно 
 
-        menubar = tk.Menu(self.window)
+        menubar = tk.Menu(self.window)   #создаем каскадное меню с лейблами, для каждой кнопки описываем событие
         self.window.config(menu=menubar)
 
         setting_menu = tk.Menu(menubar, tearoff=0)
-        setting_menu.add_command(label='Играть', command=self.reload)
-        setting_menu.add_command(label='Настройки', command=self.create_settings_win)
+        setting_menu.add_command(label='Играть', command=self.reload) #сброс до начальных настроек методом .reload
+        setting_menu.add_command(label='Настройки', command=self.create_settings_win) #дочернее окно с числом колонок, строк и мин
         setting_menu.add_command(label='Выход', command=self.window.destroy)
         menubar.add_cascade(label='Файл', menu=setting_menu)
 
