@@ -197,7 +197,7 @@ class MineSweeper:   #основной класс нашей игры (тут в
                     btn.config(text=btn.count_bomb, fg=color)
 
     def start(self):
-        self.create_widgets()     #инкапсулируем нужные нам методы
+        self.create_widgets()     #инкапсулируем нужные нам методы (заключается в сокрытии внутреннего устройства класса за интерфейсом, состоящим из методов класса)
         #self.open_all_buttons()
         MineSweeper.window.mainloop() #напосредственно отображение игровго окна
 
